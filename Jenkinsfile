@@ -1,12 +1,20 @@
-
 pipeline {
     agent any
+
+    triggers {
+        pollSCM('H/2 * * * *')
+    }
 
     tools {
         nodejs 'NodeJS22'
     }
 
     stages {
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
@@ -26,7 +34,4 @@ pipeline {
             }
         }
     }
-    triggers {
-    pollSCM('H/2 * * * *')
-}
 }
